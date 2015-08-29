@@ -2,6 +2,7 @@ package mitra
 
 class Comment {
 
+    Integer id;
     String comment;
     User user;
     Date createdOn;

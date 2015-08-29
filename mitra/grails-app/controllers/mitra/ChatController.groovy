@@ -22,17 +22,19 @@ class ChatController {
 
         def user = utilService.getUser(deviceId)
 
-        Comment comment = new Comment(comment: commentString, user: user)
-        comment.save(flush: true)
+//        comment.save(flush: true, failOnError: true)
 
 
         Chat chat = new Chat();
-        chat.comments = [comment] as Set
-        chat.tags = tagService.getTagForComment(commentString)
+        chat.tags = tagService.getTagUsingExactMatch(commentString)
         chat.createdBy = user
         chat.status = Status.OPEN
         chat.chatType = Type.TEXT
-        chat.save(flush: true)
+        chat.updatedOn = new Date()
+        chat.save(flush: true, failOnError: true)
+
+        Comment comment = new Comment(comment: commentString, user: user, createdOn: new Date(), chat: chat)
+        comment.save(flush: true, failOnError: true)
 
         returnMap = ["chatId" : chat.id, "tags":chat.tags, status:"SUCCESS"]
         render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
@@ -66,8 +68,6 @@ class ChatController {
 
         def user = utilService.getUser(deviceId)
 
-        Comment comment = new Comment(comment: commentString, user: user)
-        comment.save(flush: true)
 
         def chat = Chat.get(Integer.parseInt(chatId))
         if (!chat) {
@@ -75,10 +75,10 @@ class ChatController {
             return
         }
 
-        chat.comments.add(comment)
-        chat.save(flush: true)
+        Comment comment = new Comment(comment: commentString, user: user, createdOn: new Date(), chat: chat)
+        comment.save(flush: true)
 
-        returnMap.result = "SUCCESS"
+        returnMap.status = "SUCCESS"
         render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
     }
 
@@ -97,7 +97,7 @@ class ChatController {
         }
 
         def chat = Chat.get(Integer.parseInt(chatId))
-        if (!chat) {
+        if (!chat || utilService.getUser(deviceId) != chat.createdBy) {
             render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
             return
         }
@@ -105,7 +105,7 @@ class ChatController {
         chat.status = status
         chat.save(flush: true)
 
-        returnMap.result = "SUCCESS"
+        returnMap.status = "SUCCESS"
         render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
 
 

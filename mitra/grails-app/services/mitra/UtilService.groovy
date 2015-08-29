@@ -15,8 +15,9 @@ class UtilService {
         if (existingUser) {
             return existingUser
         }
-        User user = new User(deviceId:deviceId)
-        user.save(flush: true)
+        User user = new User(deviceId:deviceId, updatedOn: new Date())
+        user.save(flush: true, failOnError: true)
+        return user
     }
 
 }
