@@ -2,7 +2,8 @@ package mitra
 
 class User {
 
-    Integer userId;
+    String deviceId
+    Integer id;
     static hasMany = [tags: Tag, roles: Role]
 
     static constraints = {
