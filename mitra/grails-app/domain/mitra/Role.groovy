@@ -2,7 +2,7 @@ package mitra
 
 class Role {
 
-    String name;
+    String name
 
     static constraints = {
     }
