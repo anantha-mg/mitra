@@ -41,13 +41,13 @@ class ChatController {
 
     }
 
-    def getUserQuestions = {
+    def getUserChats = {
         def returnMap = [:]
         returnMap.status = "FAILED"
         def deviceId = params.DEVICE_ID
         def user = utilService.getUser(deviceId)
 
-        List<Chat> chats = Chat.findAllByUser(user)
+        List<Chat> chats = Chat.findAllByCreatedBy(user)
         chats.findAll{it.status == Status.OPEN}.sort{it.updatedOn}
 
         returnMap = ["chats" : chats, status:"SUCCESS"]
