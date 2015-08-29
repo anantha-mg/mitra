@@ -3,4 +3,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="button_view_questions">View Questions</string>
+    <string name="button_my_questions">My Questions</string>
 </resources>
