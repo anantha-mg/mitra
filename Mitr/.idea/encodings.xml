@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mitr/mitr/web/Handled.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mitr/mitr/web/MyGetThread.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mitr/mitr/web/MyHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mitr/mitr/web/MyPostThread.java" charset="UTF-8" />
+  </component>
+</project>

@@ -1,6 +1,7 @@
-package com.mitr.mitr;
+package com.mitr.mitr.ui;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.mitr.mitr.PagerAdapter;
 import com.mitr.mitr.R;
+import com.mitr.mitr.web.Handled;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Handled {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,5 +64,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void handlerCallback(Message message) {
+
     }
 }

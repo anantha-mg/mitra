@@ -1,11 +1,11 @@
-package com.mitr.mitr;
+package com.mitr.mitr.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.mitr.mitr.MyChatsFragment;
-import com.mitr.mitr.QuestionsFragment;
+import com.mitr.mitr.ui.MyChatsFragment;
+import com.mitr.mitr.ui.QuestionsFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
