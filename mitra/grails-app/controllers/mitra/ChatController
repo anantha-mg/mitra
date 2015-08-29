@@ -82,4 +82,33 @@ class ChatController {
         render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
     }
 
+    def changeStatus = {
+
+        def returnMap = [:]
+        returnMap.status = "FAILED"
+
+        def deviceId = params.DEVICE_ID
+        def chatId = params.CHAT_ID
+        def status = params.STATUS as Status
+
+        if (!deviceId || !status || !chatId) {
+            render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
+            return
+        }
+
+        def chat = Chat.get(Integer.parseInt(chatId))
+        if (!chat) {
+            render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
+            return
+        }
+
+        chat.status = status
+        chat.save(flush: true)
+
+        returnMap.result = "SUCCESS"
+        render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
+
+
+    }
+
 }
