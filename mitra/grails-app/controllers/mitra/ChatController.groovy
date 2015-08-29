@@ -41,7 +41,22 @@ class ChatController {
 
     }
 
+    def getUserQuestions = {
+        def returnMap = [:]
+        returnMap.status = "FAILED"
+        def deviceId = params.DEVICE_ID
+        def user = utilService.getUser(deviceId)
+
+        List<Chat> chats = Chat.findAllByUser(user)
+        chats.findAll{it.status == Status.OPEN}.sort{it.updatedOn}
+
+        returnMap = ["chats" : chats, status:"SUCCESS"]
+        render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
+    }
+
     def getOtherChats = {
+        def returnMap = [:]
+        returnMap.status = "FAILED"
         def tag = params.TAG
         /*List<Chats> chats = Chat.createCriteria().list{
             tags {
@@ -50,7 +65,9 @@ class ChatController {
         }*/
         List<Chat> chats = Chat.getAll()
         chats.findAll{it.status == Status.OPEN}.sort{it.updatedOn}
-        return chats.size() > 5 ? chats[1..5] : chats
+
+        returnMap = ["chats" : chats, status:"SUCCESS"]
+        render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
     }
 
     def addComment = {
