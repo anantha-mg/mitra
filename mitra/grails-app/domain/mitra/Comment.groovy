@@ -3,7 +3,7 @@ package mitra
 class Comment {
 
     String comment;
-    mitra.User user;
+    User user;
     Date createdOn;
 
     static constraints = {

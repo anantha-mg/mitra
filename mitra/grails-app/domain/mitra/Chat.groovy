@@ -2,11 +2,12 @@ package mitra
 
 class Chat {
 
-    String comment;
+    Integer id
     User createdBy;
     Status status;
     Date updatedOn;
     Type chatType;
+
     static hasMany = [ comments: Comment, tags: Tag];
 
     static constraints = {
