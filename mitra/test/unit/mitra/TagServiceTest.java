@@ -12,7 +12,9 @@ public class TagServiceTest {
 
         boolean isCommonWord = TagService.isCommonWord("at");
 
-
+        Comment c = new Comment();
+        c.setComment("India SriLanka Latest Cricket Score");
+        TagService.getTagForComment(c);
     }
 
 }

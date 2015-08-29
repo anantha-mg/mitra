@@ -13,7 +13,7 @@ class TagService {
      c) Timing of Volvo Bus from Indiranagar to Airport
      */
 
-    public Set<Tag> getTagForComment(Comment c) {
+    public static Set<Tag> getTagForComment(Comment c) {
 
         // 1) Use the comment String and find which category/tag it is likely to belong to
         // 2) Use the user tags to see which topics he usually posts to determine the tag
@@ -75,9 +75,29 @@ class TagService {
     }
 
     // Returns tag along with count for a given word - ex: Sachin Tendulkar might return (Cricket,10000), (Mumbai, 50)
-    public static List<Tag, Integer> getTagsForWord(String word) {
-        //TODO
-        null;
+    public static HashMap<Tag, Integer> getTagsForWord(String word) {
+
+
+        HashMap<Tag,Integer> tags = new HashMap<Tag,Integer>();
+
+        //Mocking/hardcoding it out
+        if(word.contains("Traffic")){
+            Tag tag = new Tag();
+            tag.setName("Traffic")
+            tags.put(tag,100);
+        }
+        else if(word.contains("Cricket")){
+            Tag tag = new Tag();
+            tag.setName("Cricket")
+            tags.put(tag,100);
+        }
+        else if(word.contains("Restaurant")){
+            Tag tag = new Tag();
+            tag.setName("Food")
+            tags.put(tag,100);
+        }
+
+        return tags;
     }
 
     public static List<String> getUniqueWordsFromComment(String comment) {
@@ -95,7 +115,7 @@ class TagService {
 
     public static boolean isCommonWord(String word) {
         //TODO load from DB
-        def commonWords = ["a", "at", "the" ] ;
+        def commonWords = ["a", "at", "the", "in" ] ;
 
         if(!word) return false;
 
