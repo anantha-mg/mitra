@@ -10,4 +10,10 @@ class Comment {
     static constraints = {
         user blank:false, nullable:false
     }
+
+    def beforeInsert = {
+        createdOn = new Date()
+    }
+
+
 }

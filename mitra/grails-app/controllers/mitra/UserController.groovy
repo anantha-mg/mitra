@@ -4,6 +4,7 @@ import grails.converters.JSON
 
 class UserController {
 
+    def utilService
     def index() { }
 
     def subscribe = {

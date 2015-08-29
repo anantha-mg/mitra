@@ -15,6 +15,15 @@ class Chat {
 //        status blank:false, nullable:false
 //        updatedOn blank:false, nullable:false
     }
+
+    def beforeInsert = {
+        updatedOn = new Date()
+    }
+
+    def beforeUpdate = {
+        updatedOn = new Date()
+    }
+
 }
 
 enum Type{
