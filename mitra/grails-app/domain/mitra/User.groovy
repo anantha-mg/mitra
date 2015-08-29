@@ -8,7 +8,6 @@ class User {
     Date updatedOn
 
     static constraints = {
-
     }
 
     def beforeUpdate = {
