@@ -51,7 +51,11 @@ class ChatController {
         List<Chat> chats = Chat.findAllByCreatedBy(user)
         chats.findAll{it.status == Status.OPEN}.sort{it.updatedOn}
 
-        returnMap = ["chats" : chats, status:"SUCCESS"]
+        def commentMap = chats.collect{chat ->
+            return [chatId: chat.id, comments: Comment.findAllByIdInList(chat.comments.collect{it.id}).sort{it.createdOn}]
+        }
+
+        returnMap = ["chats" : commentMap, status:"SUCCESS"]
         render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
     }
 
@@ -60,15 +64,22 @@ class ChatController {
         returnMap.status = "FAILED"
         def tag = params.TAG
 
-        List<Chat> chats = Chat.createCriteria().list{
+        if(tag && tag != "")
+            List<Chat> chats = Chat.createCriteria().list{
             tags {
                 'eq'('name', tag)
             }
+        } else {
+            List<Chat>chats = Chat.getAll()
         }
 
         chats.findAll{it.status == Status.OPEN}.sort{it.updatedOn}
 
-        returnMap = ["chats" : chats, status:"SUCCESS"]
+        def commentMap = chats.collect{chat ->
+            return [chatId: chat.id, comments: Comment.findAllByIdInList(chat.comments.collect{it.id}).sort{it.createdOn}]
+        }
+
+        returnMap = ["chats" : commentMap, status:"SUCCESS"]
         render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
     }
 
