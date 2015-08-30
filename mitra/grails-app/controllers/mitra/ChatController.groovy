@@ -87,6 +87,7 @@ class ChatController {
         def returnMap = [:]
         returnMap.status = "FAILED"
         def tag = params.TAG
+        def deviceId = params.DEVICE_ID
 
         List<Chat> chats = new ArrayList<Chat>();
 
@@ -99,6 +100,8 @@ class ChatController {
         } else {
             chats = Chat.getAll()
         }
+
+        chats = chats.findAll{chat -> chat.user.deviceId != deviceId}
 
         chats.findAll{it.status == Status.OPEN}.sort{it.updatedOn}
 
