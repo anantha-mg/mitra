@@ -82,13 +82,16 @@ class ChatController {
         returnMap.status = "FAILED"
         def tag = params.TAG
 
-        if(tag && tag != "")
-            List<Chat> chats = Chat.createCriteria().list{
-            tags {
-                'eq'('name', tag)
+        List<Chat> chats = new ArrayList<Chat>();
+
+        if(tag && tag != "") {
+            chats = Chat.createCriteria().list {
+                tags {
+                    'eq'('name', tag)
+                }
             }
         } else {
-            List<Chat>chats = Chat.getAll()
+            chats = Chat.getAll()
         }
 
         chats.findAll{it.status == Status.OPEN}.sort{it.updatedOn}
