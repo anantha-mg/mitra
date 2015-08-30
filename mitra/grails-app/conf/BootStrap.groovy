@@ -12,7 +12,7 @@ class BootStrap {
 
         // HACK: To be removed
 
-        ["CRICKET", "MOVIE", "WEATHER"].each { tagName ->
+        ["CRICKET", "MOVIE", "WEATHER", "FOOD", "TRAFFIC"].each { tagName ->
             Tag tag = Tag.findByName(tagName)
             if (!tag) {
                 tag = new Tag(name: tagName)

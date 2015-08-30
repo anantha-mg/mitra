@@ -27,7 +27,7 @@ class ChatController {
 
 
         Chat chat = new Chat();
-        chat.tags = tagService.getTagUsingExactMatch(commentString)
+        chat.tags = tagService.getTagForComment(commentString)
         chat.createdBy = user
         chat.status = Status.OPEN
         chat.chatType = Type.TEXT

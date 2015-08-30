@@ -13,13 +13,11 @@ class TagService {
      c) Timing of Volvo Bus from Indiranagar to Airport
      */
 
-    public static Set<Tag> getTagForComment(Comment c) {
+    def Set<Tag> getTagForComment(String comment) {
 
         // 1) Use the comment String and find which category/tag it is likely to belong to
         // 2) Use the user tags to see which topics he usually posts to determine the tag
 
-        String comment = c.comment;
-        User user = c.user;
 
         // split comment into words and remove common words like "a","the","at" etc
         // for remaining words, hit the comments DB and find out which tag it is likely to belong to
@@ -43,8 +41,9 @@ class TagService {
 
         filterTags(finalTags);
 
+        def tagsUsingHashTag = getTagUsingExactMatch(comment)
 
-        return finalTags.keySet()
+        return (finalTags.keySet() + tagsUsingHashTag) as Set
 
     }
 
@@ -55,7 +54,7 @@ class TagService {
               Wankhede -> Mumbai(10000), Cricket(2000) . Here only Mumbai might qualify
 
          */
-    private static void filterTags(HashMap hashMap){
+    def filterTags(HashMap hashMap){
         Integer totalCount = 0;
         for(Tag tag :  hashMap.keySet()){
             totalCount+= hashMap.get(tag)
@@ -69,38 +68,27 @@ class TagService {
         //TODO complete second part where based on percentages certain tags will be allowed
     }
 
-    private static void updateMap(HashMap hashMap, Tag key, Integer increment){
+    def void updateMap(HashMap hashMap, Tag key, Integer increment){
         Integer updateValue = (hashMap.get(key) == null) ? increment : hashMap.get(key) + increment
         hashMap.put(key, updateValue);
     }
 
     // Returns tag along with count for a given word - ex: Sachin Tendulkar might return (Cricket,10000), (Mumbai, 50)
-    public static HashMap<Tag, Integer> getTagsForWord(String word) {
-
+    def HashMap<Tag, Integer> getTagsForWord(String word) {
 
         HashMap<Tag,Integer> tags = new HashMap<Tag,Integer>();
 
-        //Mocking/hardcoding it out
-        if(word.contains("Traffic")){
-            Tag tag = new Tag();
-            tag.setName("Traffic")
-            tags.put(tag,100);
-        }
-        else if(word.contains("Cricket")){
-            Tag tag = new Tag();
-            tag.setName("Cricket")
-            tags.put(tag,100);
-        }
-        else if(word.contains("Restaurant")){
-            Tag tag = new Tag();
-            tag.setName("Food")
-            tags.put(tag,100);
+        Tag.getAll().each {tag ->
+            if (word.toUpperCase().contains(tag.name.toUpperCase())) {
+                tags.put(tag, 100)
+            }
+
         }
 
         return tags;
     }
 
-    public static List<String> getUniqueWordsFromComment(String comment) {
+    def List<String> getUniqueWordsFromComment(String comment) {
         String[]tokens = comment.split(" |,");
         List<String> words = new ArrayList<String>();
 
@@ -113,7 +101,7 @@ class TagService {
         return words;
     }
 
-    public static boolean isCommonWord(String word) {
+    def isCommonWord(String word) {
         //TODO load from DB
         def commonWords = ["a", "at", "the", "in" ] ;
 
@@ -131,7 +119,9 @@ class TagService {
         Matcher match = HASH_TAG_PATTERN.matcher(comment);
         while(match.find()) {
             Tag tag = Tag.findByName(match.group(1))
-            result.add(tag)
+            if (tag) {
+                result.add(tag)
+            }
         }
         return result
     }
