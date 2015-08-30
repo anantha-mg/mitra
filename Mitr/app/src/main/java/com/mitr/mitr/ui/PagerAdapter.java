@@ -20,11 +20,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
+                MyChatsFragment tab0 = new MyChatsFragment();
+                return tab0;
+            case 1:
                 QuestionsFragment tab1 = new QuestionsFragment();
                 return tab1;
-            case 1:
-                MyChatsFragment tab2 = new MyChatsFragment();
-                return tab2;
             default:
                 return null;
         }

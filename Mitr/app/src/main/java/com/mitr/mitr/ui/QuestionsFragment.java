@@ -72,6 +72,7 @@ public class QuestionsFragment extends Fragment implements Handled {
         HashMap<String, String> map = new HashMap<>();
         String android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
+        map.put("DEVICE_ID", android_id);
         new MyGetThread(map, "http://52.25.115.191:8080/mitra/chat/getOtherChats", new MyHandler(this)).start();
 
 
