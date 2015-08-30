@@ -108,6 +108,15 @@ public class ChatActivity extends AppCompatActivity implements Handled{
 //            Toast.makeText(this, "New chat started", Toast.LENGTH_SHORT);
 //            this.finish();
         }
+
+        map = new HashMap<>();
+        String android_id = Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        map.put("DEVICE_ID", android_id);
+        map.put("CHAT_ID", String.valueOf(getIntent().getExtras().get("chatId")));
+        new MyGetThread(map, "http://52.25.115.191:8080/mitra/chat/getChat", new MyHandler(this)).start();
+
+
     }
 
     @Override
