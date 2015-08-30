@@ -42,6 +42,19 @@ class ChatController {
 
     }
 
+    def getChat = {
+        def returnMap = [:]
+        returnMap.status = "FAILED"
+        def chatId = Integer.parseInt(params.CHAT_ID)
+
+        def chat = Chat.get(chatId)
+
+        def commentMap = [chatId: chat.id, comments: Comment.findAllByIdInList(chat.comments.collect{it.id}).sort{it.createdOn}]
+
+        returnMap = ["chats" : commentMap, status:"SUCCESS"]
+        render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
+    }
+
     def getUserChats = {
         def returnMap = [:]
         returnMap.status = "FAILED"
