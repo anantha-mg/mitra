@@ -37,7 +37,7 @@ class ChatController {
         Comment comment = new Comment(comment: commentString, user: user, createdOn: new Date(), chat: chat)
         comment.save(flush: true, failOnError: true)
 
-        List<User> answererList = chat.tags ? tagService.getUsersByTag(chat.tags.collect {it.name}) : User.list().findAll{user -> user.deviceId != deviceId}
+        List<User> answererList = (chat.tags ? tagService.getUsersByTag(chat.tags.collect {it.name}) : User.list()).findAll{user -> user.deviceId != deviceId}
 
         for(User answerer : answererList){
             utilService.pushNotif(answerer.deviceId, commentString)
