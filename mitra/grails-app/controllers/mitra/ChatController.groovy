@@ -51,7 +51,7 @@ class ChatController {
 
         def commentMap = [chatId: chat.id, comments: Comment.findAllByIdInList(chat.comments.collect{it.id}).sort{it.createdOn}]
 
-        returnMap = ["chats" : commentMap, status:"SUCCESS"]
+        returnMap = ["chat" : commentMap, status:"SUCCESS"]
         render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
     }
 
