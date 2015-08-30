@@ -86,6 +86,9 @@ public class MyChatsFragment extends Fragment implements Handled {
         HashMap<String, String> map = new HashMap<>();
         String android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
+
+        System.out.print("Registering device ID for our service : " + android_id);
+
         map.put("DEVICE_ID", android_id);
         new MyGetThread(map, "http://52.25.115.191:8080/mitra/chat/getUserChats", new MyHandler(this)).start();
 

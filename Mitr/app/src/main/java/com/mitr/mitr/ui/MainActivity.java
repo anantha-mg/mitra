@@ -2,6 +2,7 @@ package com.mitr.mitr.ui;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,10 @@ public class MainActivity extends AppCompatActivity implements Handled {
 
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "X0Pd9oaacmx5UXlMbvDc14lrvowK84f2FJTa9P6I", "UvI56IzEQ3J6ZN2PCIq6FOYuNCj7mCHK6JatsRsT");
-        ParseInstallation.getCurrentInstallation().put("device_id", "1234567890");
+        String deviceId = Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        System.out.print("Registering device for PUSH notif : " + deviceId);
+        ParseInstallation.getCurrentInstallation().put("device_id", deviceId);
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
 
