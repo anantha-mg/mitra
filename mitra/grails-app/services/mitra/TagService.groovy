@@ -103,7 +103,19 @@ class TagService {
 
     def isCommonWord(String word) {
         //TODO load from DB
-        def commonWords = ["a", "at", "the", "in" ] ;
+        def commonWords = ["a", "about", "all", "and", "are", "as", "at", "back", "be",
+                           "because", "been", "but", "can", "can't", "come", "could",
+                           "did", "didn't", "do", "don't", "for", "from", "get", "go",
+                           "going", "good", "got", "had", "have", "he", "her", "here",
+                           "he's", "hey", "him", "his", "how", "I", "if", "I'll", "I'm",
+                           "in", "is", "it", "it's", "just", "know", "like", "look",
+                           "me", "mean", "my", "no", "not", "now", "of", "oh", "OK",
+                           "okay", "on", "one", "or", "out", "really", "right", "say",
+                           "see", "she", "so", "some", "something", "tell", "that",
+                           "that's", "the", "then", "there", "they", "think", "this",
+                           "time", "to", "up", "want", "was", "we", "well", "were",
+                           "what", "when", "who", "why", "will", "with", "would",
+                           "yeah", "yes", "you", "your", "you're"] ;
 
         if(!word) return false;
 
@@ -126,5 +138,20 @@ class TagService {
         return result
     }
 
+
+    def getUsersByTag(String tag) {
+
+        def returnMap = [:]
+        returnMap.status = "FAILED"
+
+        List<User> users = User.createCriteria().list{
+            tags {
+                'eq'('name', tag)
+            }
+        }
+
+        returnMap = ["users" : users, status:"SUCCESS"]
+        render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
+    }
 
 }

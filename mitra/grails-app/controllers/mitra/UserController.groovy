@@ -63,21 +63,4 @@ class UserController {
         render(text: jsonResponse, contentType: "application/json", encoding: "UTF-8");
     }
 
-
-    def getUsersByTag = {
-
-        def returnMap = [:]
-        returnMap.status = "FAILED"
-        def tag = params.TAG
-
-        List<User> users = User.createCriteria().list{
-            tags {
-                'eq'('name', tag)
-            }
-        }
-
-        returnMap = ["users" : users, status:"SUCCESS"]
-        render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
-    }
-
 }
