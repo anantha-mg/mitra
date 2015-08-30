@@ -28,7 +28,7 @@ class UtilService {
      * @param deviceId
      * @return
      */
-    def pushNotif(String deviceId) {
+    def pushNotif(String deviceId, String notif) {
 
         String url = "https://api.parse.com/1/push";
 
@@ -37,7 +37,7 @@ class UtilService {
                 "device_id": "${deviceId}"
             },
             "data": {
-                "alert": "Hello TeleMitra! You have a new request"
+                "alert": "${notif}"
             }
         }"""
 

@@ -40,7 +40,7 @@ class ChatController {
         List<User> answererList = chat.tags ? tagService.getUsersByTag(chat.tags.collect {it.name}) : tagService.getUsersByTag(Tag.list().collect {it.name})
 
         for(User answerer : answererList){
-            utilService.pushNotif(answerer.deviceId)
+            utilService.pushNotif(answerer.deviceId, commentString)
         }
 
         returnMap = ["chatId" : chat.id, "tags":chat.tags, status:"SUCCESS"]
