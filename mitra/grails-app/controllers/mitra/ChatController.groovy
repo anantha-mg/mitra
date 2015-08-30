@@ -8,6 +8,7 @@ class ChatController {
 
     def tagService
     def utilService
+    def sessionFactory
 
     def addNewChat = {
         def returnMap = [:]
@@ -58,12 +59,13 @@ class ChatController {
         def returnMap = [:]
         returnMap.status = "FAILED"
         def tag = params.TAG
-        /*List<Chats> chats = Chat.createCriteria().list{
+
+        List<Chat> chats = Chat.createCriteria().list{
             tags {
-                'eq'(tag)
+                'eq'('name', tag)
             }
-        }*/
-        List<Chat> chats = Chat.getAll()
+        }
+
         chats.findAll{it.status == Status.OPEN}.sort{it.updatedOn}
 
         returnMap = ["chats" : chats, status:"SUCCESS"]
