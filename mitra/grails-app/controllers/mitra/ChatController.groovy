@@ -101,7 +101,7 @@ class ChatController {
             chats = Chat.getAll()
         }
 
-        chats = chats.findAll{chat -> chat.user.deviceId != deviceId}
+        chats = chats.findAll{chat -> chat.createdBy.deviceId != deviceId}
 
         chats.findAll{it.status == Status.OPEN}.sort{it.updatedOn}
 
