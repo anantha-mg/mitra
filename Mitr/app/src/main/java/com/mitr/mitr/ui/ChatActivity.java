@@ -140,7 +140,11 @@ public class ChatActivity extends AppCompatActivity implements Handled{
             JSONArray jsonCommentArray = (JSONArray)jsonChat.getJSONArray("comments");
             for (int i = 0; i < jsonCommentArray.length(); i++) {
                 JSONObject jsonComment = (JSONObject)jsonCommentArray.get(i);
-                comments.add(new ChatItem(jsonComment.getString("createdOn"),jsonComment.getString("comment")));
+                String deviceId = jsonComment.getString("user");
+                if (deviceId.equals(Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID))) {
+                    deviceId = MyCentral.user;
+                }
+                comments.add(new ChatItem(deviceId,jsonComment.getString("comment")));
             }
 
 
