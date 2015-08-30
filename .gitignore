@@ -5,7 +5,6 @@
 *.iws
 *.ipr
 *.ids
-*jar
 lib
 classes
 target
