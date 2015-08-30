@@ -140,14 +140,14 @@ class TagService {
     }
 
 
-    def getUsersByTag(String tag) {
+    def getUsersByTag(tagList) {
 
         def returnMap = [:]
         returnMap.status = "FAILED"
 
         List<User> users = User.createCriteria().list{
             tags {
-                'eq'('name', tag)
+                'in'('name', tagList)
             }
         }
 
