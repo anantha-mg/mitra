@@ -37,7 +37,11 @@ class ChatController {
         Comment comment = new Comment(comment: commentString, user: user, createdOn: new Date(), chat: chat)
         comment.save(flush: true, failOnError: true)
 
-        def answererList = chat.tags ? tagService.getUsersByTag(chat.tags.collect {it.name}) : tagService.getUsersByTag(Tag.list().collect {it.name})
+        List<User> answererList = chat.tags ? tagService.getUsersByTag(chat.tags.collect {it.name}) : tagService.getUsersByTag(Tag.list().collect {it.name})
+
+        for(User answerer : answererList){
+            utilService.pushNotif(answerer.deviceId)
+        }
 
         returnMap = ["chatId" : chat.id, "tags":chat.tags, status:"SUCCESS"]
         render(text: returnMap as JSON, contentType: "application/json", encoding: "UTF-8")
