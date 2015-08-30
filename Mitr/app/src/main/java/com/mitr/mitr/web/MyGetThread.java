@@ -64,8 +64,6 @@ public class MyGetThread extends Thread {
                 content += line;
             }
 
-            if (content.contains("]")) content = content.substring(0, content.indexOf("]") + 1);
-
             Bundle msgBundle = new Bundle();
             msgBundle.putString("result", content);
 
@@ -81,6 +79,7 @@ public class MyGetThread extends Thread {
         }
         catch (IOException ex) {
             Log.e(TAG, "Connection Error");
+            Log.e(TAG, ex.getMessage(), ex);
         }
         finally {
             if (connection != null) {

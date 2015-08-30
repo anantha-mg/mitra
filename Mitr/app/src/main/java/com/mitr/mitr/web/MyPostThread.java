@@ -70,6 +70,7 @@ public class MyPostThread extends Thread {
         }
         catch (IOException ex) {
             Log.d(TAG, "Connection Error");
+            Log.e(TAG, ex.getMessage(), ex);
         } finally {
             if (connection != null) {
                 connection.disconnect();
